@@ -11,6 +11,6 @@ namespace FundAppsKata
         public List<PackageCost> Packages {get;set;}
         public double Total { get; set; }
         public double SpeedyShippingTotal { get; set; }
-
+        public double MultiParcelTotal { get; set; }
     }
 }

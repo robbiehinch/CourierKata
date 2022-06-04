@@ -50,6 +50,38 @@
             };
         }
 
+        private static HashSet<PackageCost> CheapestPackages(IEnumerable<PackageCost> packageCost, int discountSize)
+        {
+            var sorted = packageCost
+                .OrderBy(_ => _.Cost)
+                .ToList();
+            var discounts = sorted.Count / discountSize;
+            return sorted
+                .Take(discounts)
+                .ToHashSet();
+        }
+
+        private static double CalculateDiscount(List<PackageCost> packages)
+        {
+            var packagesBySize = packages
+                .ToLookup(_ => _.Size);
+            var smallPackages = packagesBySize[PackageSize.Small];
+            var smallDiscountPackages = CheapestPackages(smallPackages, 4);
+
+            var mediumPackages = packagesBySize[PackageSize.Medium];
+            var mediumDiscountPackages = CheapestPackages(mediumPackages, 3);
+
+            var remainingDiscountPackages = packages
+                .Where(_ => !mediumDiscountPackages.Contains(_) && !smallDiscountPackages.Contains(_))
+                .ToList();
+
+            var fifthParcelDiscountPackages = CheapestPackages(remainingDiscountPackages, 5);
+
+            return smallDiscountPackages.Sum(_ => _.Cost)
+                + mediumDiscountPackages.Sum(_ => _.Cost)
+                + fifthParcelDiscountPackages.Sum(_ => _.Cost);
+        }
+
         public static OrderCost Calculate(IEnumerable<PackageDimensions> packages)
         {
             var packageCosts = packages
@@ -57,11 +89,14 @@
                 .ToList();
 
             var total = packageCosts.Sum(_ => _.Cost);
-            var speedyShipping = total * 2;
+            var discount = CalculateDiscount(packageCosts);
+            var discountTotal = total - discount;
+            var speedyShipping = discountTotal * 2;
             return new OrderCost
             {
                 Packages = packageCosts,
                 Total = total,
+                MultiParcelTotal = discountTotal,
                 SpeedyShippingTotal = speedyShipping
             };
         }

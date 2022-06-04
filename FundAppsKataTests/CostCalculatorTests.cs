@@ -487,5 +487,189 @@ namespace FundAppsKata.Tests
             Assert.AreEqual(PackageSize.Heavy, singleResult.Size);
             Assert.AreEqual(50, singleResult.Cost); //heavy parcel charge only
         }
+
+        [TestMethod()]
+        public void SmallParcelMania()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm = 1,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 1,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 1,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 1,
+                    WidthCm = 1,
+                    DepthCm = 1
+                }
+            });
+
+            //Check package calculation
+            Assert.AreEqual(3 * 4, result.Total);
+            Assert.AreEqual(3 * 3, result.MultiParcelTotal);
+            Assert.AreEqual(3 * 3 * 2, result.SpeedyShippingTotal);
+        }
+
+        [TestMethod()]
+        public void MediumParcelMania()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm = 10,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 10,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 10,
+                    WidthCm = 1,
+                    DepthCm = 1
+                }
+            });
+
+            //Check package calculation
+            Assert.AreEqual(8 * 3, result.Total);
+            Assert.AreEqual(8 * 2, result.MultiParcelTotal);
+            Assert.AreEqual(8 * 2 * 2, result.SpeedyShippingTotal);
+        }
+
+        [TestMethod()]
+        public void FifthParcelMania()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                }
+            });
+
+            //Check package calculation
+            Assert.AreEqual(15 * 5, result.Total);
+            Assert.AreEqual(15 * 4, result.MultiParcelTotal);
+            Assert.AreEqual(15 * 4 * 2, result.SpeedyShippingTotal);
+        }
+
+        [TestMethod()]
+        public void ParcelMania10Parcels3Medium()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm = 10,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 10,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 10,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                },
+                new PackageDimensions
+                {
+                    HeightCm = 50,
+                    WidthCm = 1,
+                    DepthCm = 1
+                }
+            });
+
+            //Check package calculation
+            Assert.AreEqual(8 * 3 + 15 * 7, result.Total);
+            Assert.AreEqual(8 * 1 + 15 * 7, result.MultiParcelTotal);
+            Assert.AreEqual((8 * 1 + 15 * 7) * 2, result.SpeedyShippingTotal);
+        }
     }
 }
