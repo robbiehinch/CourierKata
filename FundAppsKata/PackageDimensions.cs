@@ -11,6 +11,7 @@ namespace FundAppsKata
         public int HeightCm { get; set; }
         public int WidthCm { get; set; }
         public int DepthCm { get; set; }
+        public int WeightKg { get; set; }
 
         public override string ToString()
         {

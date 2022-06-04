@@ -179,5 +179,90 @@ namespace FundAppsKata.Tests
                 })
                 );
         }
+
+        [TestMethod()]
+        public void OverweightSmallCharges()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm = 1,
+                    WidthCm = 1,
+                    DepthCm = 1,
+                    WeightKg = 1
+                }
+            });
+
+            var singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Small, singleResult.Size);
+            Assert.AreEqual(5, singleResult.Cost);
+        }
+
+        [TestMethod()]
+        public void OverweightMediumParcel()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=10,
+                    WeightKg = 3
+                }
+            });
+
+            var singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Medium, singleResult.Size);
+            Assert.AreEqual(10, singleResult.Cost);
+        }
+
+        [TestMethod()]
+        public void OverweightLargeParcel()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=50,
+                    WeightKg = 6
+                }
+            });
+
+            var singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Large, singleResult.Size);
+            Assert.AreEqual(17, singleResult.Cost);
+        }
+
+        [TestMethod()]
+        public void OverweightXlParcel()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=100,
+                    WeightKg = 10
+                }
+            });
+
+            var singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.XL, singleResult.Size);
+            Assert.AreEqual(27, singleResult.Cost);
+        }
+
     }
 }
