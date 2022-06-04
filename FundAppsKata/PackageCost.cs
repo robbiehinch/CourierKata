@@ -11,7 +11,8 @@ namespace FundAppsKata
         Small,
         Medium,
         Large,
-        XL
+        XL,
+        Heavy
     }
 
     public class PackageCost

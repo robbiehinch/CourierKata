@@ -76,7 +76,7 @@ namespace FundAppsKata.Tests
             });
 
             Assert.AreEqual(8, result.Total);
-            
+
             result = CostCalculator.Calculate(new[]
             {
                 new PackageDimensions
@@ -381,7 +381,7 @@ namespace FundAppsKata.Tests
             //Check package calculation
             Assert.AreEqual(PackageSize.XL, singleResult.Size);
             Assert.AreEqual(27, singleResult.Cost);
-            
+
             result = CostCalculator.Calculate(new[]
             {
                 new PackageDimensions
@@ -398,6 +398,94 @@ namespace FundAppsKata.Tests
             //Check package calculation
             Assert.AreEqual(PackageSize.XL, singleResult.Size);
             Assert.AreEqual(29, singleResult.Cost);
+        }
+
+        [TestMethod()]
+        public void HeavyParcelCharges()
+        {
+            var result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm = 1,
+                    WidthCm = 1,
+                    DepthCm = 1,
+                    WeightKg = 51
+                }
+            });
+
+            var singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Heavy, singleResult.Size);
+            Assert.AreEqual(51, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=10,
+                    WeightKg = 52
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Heavy, singleResult.Size);
+            Assert.AreEqual(52, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=50,
+                    WeightKg = 53
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Heavy, singleResult.Size);
+            Assert.AreEqual(53, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=100,
+                    WeightKg = 54
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Heavy, singleResult.Size);
+            Assert.AreEqual(54, singleResult.Cost);
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=100,
+                    WeightKg = 49
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Heavy, singleResult.Size);
+            Assert.AreEqual(50, singleResult.Cost); //heavy parcel charge only
         }
     }
 }

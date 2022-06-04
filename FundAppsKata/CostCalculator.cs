@@ -2,10 +2,18 @@
 {
     public static class CostCalculator
     {
-        private static double CalculateOverWeightCharge(int weight, int limit)
+        private static Tuple<double, PackageSize> CalculateCharge(double basePrice, int weight, int limit, PackageSize standardSize)
         {
             var overweightAmount = weight - limit;
-            return overweightAmount > 0 ? 2 * overweightAmount : 0;
+            var fullPrice = basePrice + (overweightAmount > 0 ? 2 * overweightAmount : 0);
+
+            var heavyOverweightAmount = weight - 50;
+            var overWeightPrice = 50.0 + (heavyOverweightAmount > 0 ? heavyOverweightAmount : 0);
+
+            if (overWeightPrice < fullPrice)
+                return Tuple.Create(overWeightPrice, PackageSize.Heavy);
+
+            return Tuple.Create(fullPrice, standardSize);
         }
 
         private static Tuple<double, PackageSize> CalculateParcelCost(PackageDimensions packageDimensions)
@@ -17,22 +25,18 @@
             var maxDimension = Math.Max(Math.Max(packageDimensions.HeightCm, packageDimensions.WidthCm), packageDimensions.DepthCm);
             if (maxDimension < 10)
             {
-                return Tuple.Create(3.0 + CalculateOverWeightCharge(packageDimensions.WeightKg, 1)
-                    , PackageSize.Small);
+                return CalculateCharge(3.0, packageDimensions.WeightKg, 1, PackageSize.Small);
             }
             if (maxDimension < 50)
             {
-                return Tuple.Create(8.0 + CalculateOverWeightCharge(packageDimensions.WeightKg, 3),
-                    PackageSize.Medium);
+                return CalculateCharge(8.0, packageDimensions.WeightKg, 3, PackageSize.Medium);
             }
             if (maxDimension < 100)
             {
-                return Tuple.Create(15.0 + CalculateOverWeightCharge(packageDimensions.WeightKg, 6)
-                    , PackageSize.Large);
+                return CalculateCharge(15.0, packageDimensions.WeightKg, 6, PackageSize.Large);
             }
 
-            return Tuple.Create(25.0 + CalculateOverWeightCharge(packageDimensions.WeightKg, 10)
-                    , PackageSize.XL);
+            return CalculateCharge(25.0, packageDimensions.WeightKg, 10, PackageSize.XL);
         }
 
         private static PackageCost Calculate(PackageDimensions packageDimensions)
