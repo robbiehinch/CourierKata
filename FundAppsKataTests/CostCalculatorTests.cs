@@ -130,10 +130,10 @@ namespace FundAppsKata.Tests
 
             //Check package calculation
             Assert.AreEqual(PackageSize.XL, singleResult.Size);
-            Assert.AreEqual(15, singleResult.Cost);
+            Assert.AreEqual(25, singleResult.Cost);
 
             //Check Total Calculation
-            Assert.AreEqual(15, result.Total);
+            Assert.AreEqual(25, result.Total);
         }
 
         [TestMethod()]
@@ -171,7 +171,7 @@ namespace FundAppsKata.Tests
                 DepthCm = 9
             };
 
-            Assert.ThrowsException<Exception>(
+            Assert.ThrowsException<ArgumentException>(
                 () => CostCalculator.Calculate(new[]
                 {
                     negativeDimensionPackage
