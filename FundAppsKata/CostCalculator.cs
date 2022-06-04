@@ -35,10 +35,14 @@
             var packageCosts = packages
                 .Select(_ => Calculate(_))
                 .ToList();
+
+            var total = packageCosts.Sum(_ => _.Cost);
+            var speedyShipping = total * 2;
             return new OrderCost
             {
                 Packages = packageCosts,
-                Total = packageCosts.Sum(_ => _.Cost)
+                Total = total,
+                SpeedyShippingTotal = speedyShipping
             };
         }
     }

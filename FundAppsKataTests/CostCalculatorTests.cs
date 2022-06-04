@@ -159,6 +159,7 @@ namespace FundAppsKata.Tests
 
             //Check Total Calculation
             Assert.AreEqual(25 + 3, result.Total);
+            Assert.AreEqual((25 + 3) * 2, result.SpeedyShippingTotal);
         }
 
         [TestMethod()]
