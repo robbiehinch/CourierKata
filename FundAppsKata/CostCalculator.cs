@@ -2,6 +2,12 @@
 {
     public static class CostCalculator
     {
+        private static double CalculateOverWeightCharge(int weight, int limit)
+        {
+            var overweightAmount = weight - limit;
+            return overweightAmount > 0 ? 2 * overweightAmount : 0;
+        }
+
         private static Tuple<double, PackageSize> CalculateParcelCost(PackageDimensions packageDimensions)
         {
             var minDimension = Math.Min(Math.Min(packageDimensions.HeightCm, packageDimensions.WidthCm), packageDimensions.DepthCm);
@@ -11,29 +17,21 @@
             var maxDimension = Math.Max(Math.Max(packageDimensions.HeightCm, packageDimensions.WidthCm), packageDimensions.DepthCm);
             if (maxDimension < 10)
             {
-                return Tuple.Create(packageDimensions.WeightKg >= 1
-                    ? 5.0
-                    : 3.0
+                return Tuple.Create(3.0 + CalculateOverWeightCharge(packageDimensions.WeightKg, 1)
                     , PackageSize.Small);
             }
             if (maxDimension < 50)
             {
-                return Tuple.Create(packageDimensions.WeightKg >= 3
-                    ? 10.0
-                    : 8.0,
+                return Tuple.Create(8.0 + CalculateOverWeightCharge(packageDimensions.WeightKg, 3),
                     PackageSize.Medium);
             }
             if (maxDimension < 100)
             {
-                return Tuple.Create(packageDimensions.WeightKg >= 6
-                    ? 17.0
-                    : 15.0
+                return Tuple.Create(15.0 + CalculateOverWeightCharge(packageDimensions.WeightKg, 6)
                     , PackageSize.Large);
             }
 
-            return Tuple.Create(packageDimensions.WeightKg >= 10
-                    ? 27.0
-                    : 25.0
+            return Tuple.Create(25.0 + CalculateOverWeightCharge(packageDimensions.WeightKg, 10)
                     , PackageSize.XL);
         }
 

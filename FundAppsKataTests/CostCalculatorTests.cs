@@ -198,7 +198,41 @@ namespace FundAppsKata.Tests
 
             //Check package calculation
             Assert.AreEqual(PackageSize.Small, singleResult.Size);
+            Assert.AreEqual(3, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm = 1,
+                    WidthCm = 1,
+                    DepthCm = 1,
+                    WeightKg = 2
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Small, singleResult.Size);
             Assert.AreEqual(5, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm = 1,
+                    WidthCm = 1,
+                    DepthCm = 1,
+                    WeightKg = 3
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Small, singleResult.Size);
+            Assert.AreEqual(7, singleResult.Cost);
         }
 
         [TestMethod()]
@@ -219,7 +253,41 @@ namespace FundAppsKata.Tests
 
             //Check package calculation
             Assert.AreEqual(PackageSize.Medium, singleResult.Size);
+            Assert.AreEqual(8, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=10,
+                    WeightKg = 4
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Medium, singleResult.Size);
             Assert.AreEqual(10, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=10,
+                    WeightKg = 5
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Medium, singleResult.Size);
+            Assert.AreEqual(12, singleResult.Cost);
         }
 
         [TestMethod()]
@@ -240,7 +308,41 @@ namespace FundAppsKata.Tests
 
             //Check package calculation
             Assert.AreEqual(PackageSize.Large, singleResult.Size);
+            Assert.AreEqual(15, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=50,
+                    WeightKg = 7
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Large, singleResult.Size);
             Assert.AreEqual(17, singleResult.Cost);
+
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=50,
+                    WeightKg = 8
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.Large, singleResult.Size);
+            Assert.AreEqual(19, singleResult.Cost);
         }
 
         [TestMethod()]
@@ -261,8 +363,41 @@ namespace FundAppsKata.Tests
 
             //Check package calculation
             Assert.AreEqual(PackageSize.XL, singleResult.Size);
-            Assert.AreEqual(27, singleResult.Cost);
-        }
+            Assert.AreEqual(25, singleResult.Cost);
 
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=100,
+                    WeightKg = 11
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.XL, singleResult.Size);
+            Assert.AreEqual(27, singleResult.Cost);
+            
+            result = CostCalculator.Calculate(new[]
+            {
+                new PackageDimensions
+                {
+                    HeightCm=1,
+                    WidthCm=1,
+                    DepthCm=100,
+                    WeightKg = 12
+                }
+            });
+
+            singleResult = result.Packages.Single();
+
+            //Check package calculation
+            Assert.AreEqual(PackageSize.XL, singleResult.Size);
+            Assert.AreEqual(29, singleResult.Cost);
+        }
     }
 }
